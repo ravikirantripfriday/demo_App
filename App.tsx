@@ -3,14 +3,16 @@ import React from 'react'
 import FlightSearch from './components/Flight/FlightSearch'
 import { store } from './components/redux/store'
 import { Provider } from 'react-redux'
-
+import Home from './components/home/Home'
+import { NavigationContainer } from '@react-navigation/native';
 const App = () => {
   return (
+    <NavigationContainer>
     <Provider store={store}>
-      <View style={{flex:1}}>
-     <FlightSearch/>
-    </View>
+     {/* <FlightSearch/> */}
+     <Home/>
     </Provider>
+    </NavigationContainer>
   )
 }
 
