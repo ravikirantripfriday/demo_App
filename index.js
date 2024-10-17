@@ -11,12 +11,16 @@ export default function Main() {
         ...DefaultTheme,
         colors: {
           ...DefaultTheme.colors,
-          primary: 'tomato',
-          secondary: 'yellow',
+          primary : "#001219",
+          primaryLite : "#108bbc",
+          secondary :" #BB3E03",
+          highlight : "#94D2BD",
+          highlightLite : "#94d2bd2a",
+          highlightTranslucent : "#94d2bda9",
         },
       };
     return (
-      <PaperProvider theme={theme}>
+      <PaperProvider>
         <App/>
       </PaperProvider>
     );

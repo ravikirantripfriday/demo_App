@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Button, Checkbox, List, Text, TextInput} from 'react-native-paper';
+import { ms } from 'react-native-size-matters';
 
 const FlightSearch = () => {
   const [text, setText] = useState('');
@@ -27,13 +28,12 @@ const FlightSearch = () => {
     setCabinClassexpanded(false);
   };
   return (
-    <ScrollView>
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
           setExpanded(false);
         }}>
-        <View style={{padding: 20, flex: 1}}>
+        <View style={{ flex: 1}}>
           <View style={{gap: 10}}>
             <TextInput
               mode="outlined"
@@ -134,12 +134,11 @@ const FlightSearch = () => {
             />
             <Text variant="headlineSmall">Direct Flights only</Text>
           </View>
-          <Button mode="contained" onPress={() => console.log('Pressed')} rippleColor={"white"} buttonColor='black'  dark labelStyle={{fontSize:20}} style={{height:"13%",justifyContent:'center'}} contentStyle={{height:"100%"}}>
+          <Button mode="contained" onPress={() => console.log('Pressed')} rippleColor={"white"} buttonColor='black'  dark labelStyle={{fontSize:20}} style={{height:ms(50),justifyContent:'center',marginTop:ms(10)}} contentStyle={{height:"100%"}}>
             Search Flight
           </Button>
         </View>
       </TouchableWithoutFeedback>
-    </ScrollView>
   );
 };
 
