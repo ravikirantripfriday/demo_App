@@ -5,10 +5,62 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import {Button, Checkbox, List, Text, TextInput} from 'react-native-paper';
 import { ms } from 'react-native-size-matters';
-
+const initialState=
+{
+  origin: '',
+  destination: '',
+  departure: '',
+  cabinClass: 'Economy',
+  adults: null,
+  directFlight: false,
+}
+const reducer=(state,action)=>
+{
+  switch(action.type){
+case "origin":
+  return{
+    ...state,
+    [action.field]:action.value,
+  }
+  case "destination":
+    {
+      return{
+        ...state,
+        [action.field]:action.value
+      }
+    }
+    case "departure":
+      {
+        return{
+          ...state,
+          [action.field]:action.value
+        }
+      }
+      case "cabinClass":{
+        return{
+          ...state,
+          [action.field]:action.value
+        }
+      }
+      case "adults":{
+        return{
+          ...state,
+          [action.field]:action.value
+        }
+      }
+      case "directFlight":{
+        return{
+          ...state,
+          [action.field]:action.value
+        }
+      }
+default:
+  return state
+  }
+}
 const FlightSearch = () => {
   const [text, setText] = useState('');
   const [expanded, setExpanded] = useState(false);
@@ -16,15 +68,16 @@ const FlightSearch = () => {
   const [cabinClass, setCabinClass] = useState('Economy');
   const [cabinClassexpanded, setCabinClassexpanded] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [state,dispatch]=useReducer(reducer,initialState)
   const handlePress = () => setExpanded(!expanded);
   const handlePressCabinClass = () =>
     setCabinClassexpanded(!cabinClassexpanded);
   const handleSelect = value => {
-    setSelectedValue(value);
+    dispatch({type:"adults",field:"adults",value:value})
     setExpanded(false);
   };
   const handleSelectCabinClass = value => {
-    setCabinClass(value);
+    dispatch({type:"cabinClass",field:"cabinClass",value:value})
     setCabinClassexpanded(false);
   };
   return (
@@ -32,29 +85,42 @@ const FlightSearch = () => {
         onPress={() => {
           Keyboard.dismiss();
           setExpanded(false);
+          setCabinClassexpanded(false);
         }}>
-        <View style={{ flex: 1}}>
+        <ScrollView style={{ flex: 1}} showsVerticalScrollIndicator={false}>
           <View style={{gap: 10}}>
             <TextInput
               mode="outlined"
               style={{fontSize: 20}}
-              value={text}
-              onChangeText={setText}
+              value={state.origin}
+              onChangeText={text=>
+              {
+              dispatch({type:"origin",field:"origin",value:text})
+              }
+              }
               placeholder="Origin"
             />
             <TextInput
               mode="outlined"
               style={{fontSize: 20}}
-              value={text}
-              onChangeText={setText}
+              value={state.destination}
+              onChangeText={text=>
+              {
+                dispatch({type:"destination",field:'destination',value:text})
+              }
+              }
               placeholder="Destination"
             />
             <TouchableOpacity>
               <TextInput
                 mode="outlined"
                 style={{fontSize: 20}}
-                value={text}
-                onChangeText={setText}
+                value={state.departure}
+                onChangeText={text=>
+                {
+                  dispatch({type:'departure',field:'departure',value:text})
+                }
+                }
                 placeholder="Departure"
                 editable={false}
                 pointerEvents="none"
@@ -63,22 +129,23 @@ const FlightSearch = () => {
           </View>
           <List.Section>
             <List.Accordion
-              title={selectedValue ? `Adults: ${selectedValue}` : 'Adults'}
+              title={state.adults ? `Adults: ${state.adults}` : 'Adults'}
               // left={props => !selectedValue && <List.Icon {...props} icon="account" color="black" />}
               expanded={expanded}
               onPress={handlePress}
               style={{
-                width: '50%',
+                width: '60%',
                 // backgroundColor: "red",
-                // borderRadius: 20,
+                borderRadius: 6,
                 borderWidth: 1,
               }}
               titleStyle={{fontSize: 20, color: 'black'}}
-              description={!selectedValue ? '12 Yrs +' : null}
+              description={!state.adults ? '12 Yrs +' : null}
               descriptionStyle={{
                 color: 'black',
-              }}>
-              <View style={{borderWidth: 1, width: '50%'}}>
+              }}
+              >
+              <View style={{borderWidth: 1, width: '60%',marginTop:10, borderRadius: 6,}}>
                 <List.Item title="0" onPress={() => handleSelect('0')} />
                 <List.Item title="1" onPress={() => handleSelect('1')} />
                 <List.Item title="2" onPress={() => handleSelect('2')} />
@@ -94,14 +161,15 @@ const FlightSearch = () => {
           </List.Section>
           <List.Section>
             <List.Accordion
-              title={cabinClass}
+              title={state.cabinClass}
               expanded={cabinClassexpanded}
               onPress={handlePressCabinClass}
               style={{
                 borderWidth: 1,
+                borderRadius: 6,
               }}
               titleStyle={{fontSize: 20, color: 'black'}}>
-              <View style={{borderWidth: 1}}>
+              <View style={{borderWidth: 1,marginTop:10, borderRadius: 6}}>
                 <List.Item
                   title="Economy"
                   onPress={() => handleSelectCabinClass('Economy')}
@@ -127,45 +195,19 @@ const FlightSearch = () => {
           </List.Section>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Checkbox
-              status={checked ? 'checked' : 'unchecked'}
+              status={state.directFlight ? 'checked' : 'unchecked'}
               onPress={() => {
-                setChecked(!checked);
+                dispatch({type:'directFlight',field:"directFlight",value:!state.directFlight})
               }}
             />
             <Text variant="headlineSmall">Direct Flights only</Text>
           </View>
-          <Button mode="contained" onPress={() => console.log('Pressed')} rippleColor={"white"} buttonColor='black'  dark labelStyle={{fontSize:20}} style={{height:ms(50),justifyContent:'center',marginTop:ms(10)}} contentStyle={{height:"100%"}}>
+          <Button mode="contained" onPress={() => console.log(state)} rippleColor={"white"} buttonColor='black'  dark labelStyle={{fontSize:20}} style={{height:ms(50),justifyContent:'center',marginTop:ms(10)}} contentStyle={{height:"100%"}}>
             Search Flight
           </Button>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
   );
 };
 
 export default FlightSearch;
-
-
-// import React from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { decrement, increment } from '../redux/reducer'
-// import { View, Text, Button } from 'react-native';
-//  function FlightSearch() {
-//   const count = useSelector((state) => state.mainReducer.value)
-//   const dispatch = useDispatch()
-//   return (
-//     <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-//     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//       <Button
-//         title="Increment"
-//         onPress={() => dispatch(increment())}
-//       />
-//       <Text style={{ marginHorizontal: 20, fontSize: 24 }}>{count}</Text>
-//       <Button
-//         title="Decrement"
-//         onPress={() => dispatch(decrement())}
-//       />
-//     </View>
-//   </View>
-//   )
-// }
-// export default FlightSearch;

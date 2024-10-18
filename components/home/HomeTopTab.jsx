@@ -20,7 +20,7 @@ const CabsScreen = () => <Text style={styles.screenText}>Cabs Screen</Text>;
 const BusScreen = () => <Text style={styles.screenText}>Bus Screen</Text>;
 
 export default function CustomNavBar() {
-  const [activeTab, setActiveTab] = useState('Hotels');
+  const [activeTab, setActiveTab] = useState('Flights');
   const flatListRef = useRef(null);
 
   const tabs = [
@@ -82,12 +82,7 @@ export default function CustomNavBar() {
       </View>
 
       <View style={styles.screenContainer}>
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          showsVerticalScrollIndicator={false}
-        >
           {ActiveScreenComponent && <ActiveScreenComponent />}
-        </ScrollView>
       </View>
     </View>
   );
