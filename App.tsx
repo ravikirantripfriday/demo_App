@@ -1,18 +1,25 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import FlightSearch from './components/Flight/FlightSearch'
 import { store } from './components/redux/store'
 import { Provider } from 'react-redux'
-import Home from './components/home/Home'
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import AppNavigation from './components/common/navigation/AppNavigation'
+import BottomNavigation from './components/common/navigation/BottomNavigation';
+
 const App = () => {
+  const customTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'white', // Your custom background color
+    },
+  };
+  
   return (
-    <NavigationContainer>
     <Provider store={store}>
-     {/* <FlightSearch/> */}
-     <Home/>
+      <NavigationContainer theme={customTheme}>
+       <AppNavigation/>
+      </NavigationContainer>
     </Provider>
-    </NavigationContainer>
   )
 }
 

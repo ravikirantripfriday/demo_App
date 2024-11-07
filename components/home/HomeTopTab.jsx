@@ -7,22 +7,13 @@ import IconSwitcher from '../icons/IconSwitcher';
 import { logo, logo2 } from './assets';
 import FlightSearch from '../Flight/FlightSearch';
 
-const FlightsScreen = () => {
-  return (
-    <>
-      <Text style={styles.screenText}>Flights Screen</Text>
-      <TextInput />
-    </>
-  );
-};
 const HotelsScreen = () => <Text style={styles.screenText}>Hotels Screen</Text>;
 const CabsScreen = () => <Text style={styles.screenText}>Cabs Screen</Text>;
 const BusScreen = () => <Text style={styles.screenText}>Bus Screen</Text>;
 
-export default function CustomNavBar() {
+export default function CustomNavBar(props) {
   const [activeTab, setActiveTab] = useState('Flights');
   const flatListRef = useRef(null);
-
   const tabs = [
     { label: 'Flights', icon: 'plane-departure', component: FlightSearch },
     { label: 'Hotels', icon: 'hotel', component: HotelsScreen },
@@ -82,7 +73,7 @@ export default function CustomNavBar() {
       </View>
 
       <View style={styles.screenContainer}>
-          {ActiveScreenComponent && <ActiveScreenComponent />}
+          {ActiveScreenComponent && <ActiveScreenComponent {...props}/>}
       </View>
     </View>
   );

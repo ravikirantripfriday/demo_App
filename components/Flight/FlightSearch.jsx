@@ -57,13 +57,72 @@ const reducer = (state, action) => {
       return state;
   }
 };
-const FlightSearch = () => {
-  const [text, setText] = useState('');
+const airports = [
+  {
+    name: "Indira Gandhi International Airport",
+    code: "DEL",
+    city: "Delhi",
+    state: "Delhi",
+  },
+  {
+    name: "Chhatrapati Shivaji Maharaj International Airport",
+    code: "BOM",
+    city: "Mumbai",
+    state: "Maharashtra",
+  },
+  {
+    name: "Kempegowda International Airport",
+    code: "BLR",
+    city: "Bengaluru",
+    state: "Karnataka",
+  },
+  {
+    name: "Chennai International Airport",
+    code: "MAA",
+    city: "Chennai",
+    state: "Tamil Nadu",
+  },
+  {
+    name: "Netaji Subhas Chandra Bose International Airport",
+    code: "CCU",
+    city: "Kolkata",
+    state: "West Bengal",
+  },
+  {
+    name: "Rajiv Gandhi International Airport",
+    code: "HYD",
+    city: "Hyderabad",
+    state: "Telangana",
+  },
+  {
+    name: "Sardar Vallabhbhai Patel International Airport",
+    code: "AMD",
+    city: "Ahmedabad",
+    state: "Gujarat",
+  },
+  {
+    name: "Cochin International Airport",
+    code: "COK",
+    city: "Kochi",
+    state: "Kerala",
+  },
+  {
+    name: "Goa International Airport",
+    code: "GOI",
+    city: "Dabolim",
+    state: "Goa",
+  },
+  {
+    name: "Jaipur International Airport",
+    code: "JAI",
+    city: "Jaipur",
+    state: "Rajasthan",
+  },
+];
+
+const FlightSearch = (props) => {
   const [expanded, setExpanded] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
-  const [cabinClass, setCabinClass] = useState('Economy');
   const [cabinClassexpanded, setCabinClassexpanded] = useState(false);
-  const [checked, setChecked] = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
   const handlePress = () => setExpanded(!expanded);
   const handlePressCabinClass = () =>
@@ -76,6 +135,7 @@ const FlightSearch = () => {
     dispatch({type: 'cabinClass', field: 'cabinClass', value: value});
     setCabinClassexpanded(false);
   };
+  console.log(props,"navigation")
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -83,7 +143,7 @@ const FlightSearch = () => {
         setExpanded(false);
         setCabinClassexpanded(false);
       }}>
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false} contentContainerStyle={{paddingVertical:ms(20)}}>
         <View style={{gap: 10}}>
           <TextInput
             mode="outlined"
@@ -213,7 +273,8 @@ const FlightSearch = () => {
         </View>
         <Button
           mode="contained"
-          onPress={() => console.log(state)}
+          // onPress={() => console.log(state)}
+          onPress={()=>navi}
           rippleColor={'white'}
           buttonColor="black"
           dark
