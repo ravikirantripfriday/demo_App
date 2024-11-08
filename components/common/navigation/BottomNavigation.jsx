@@ -21,6 +21,8 @@ const BottomNavigation = () => {
         //   backgroundColor: 'green',
         //   borderRadius: ms(40),
         //   margin: ms(10),
+        borderTopLeftRadius:ms(40),
+        borderTopRightRadius:ms(40),
           overflow:"hidden"
         },
         tabBarLabelStyle: {

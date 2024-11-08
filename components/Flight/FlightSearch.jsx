@@ -8,6 +8,7 @@ import {
 import React, {useReducer, useState} from 'react';
 import {Button, Checkbox, List, Text, TextInput} from 'react-native-paper';
 import {ms} from 'react-native-size-matters';
+import { useNavigation } from '@react-navigation/native';
 const initialState = {
   origin: '',
   destination: '',
@@ -135,7 +136,7 @@ const FlightSearch = (props) => {
     dispatch({type: 'cabinClass', field: 'cabinClass', value: value});
     setCabinClassexpanded(false);
   };
-  console.log(props,"navigation")
+  const navigate=useNavigation()
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -143,7 +144,7 @@ const FlightSearch = (props) => {
         setExpanded(false);
         setCabinClassexpanded(false);
       }}>
-      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false} contentContainerStyle={{paddingVertical:ms(20)}}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false} contentContainerStyle={{paddingVertical:ms(5)}}>
         <View style={{gap: 10}}>
           <TextInput
             mode="outlined"
@@ -274,7 +275,7 @@ const FlightSearch = (props) => {
         <Button
           mode="contained"
           // onPress={() => console.log(state)}
-          onPress={()=>navi}
+          onPress={()=>navigate.navigate("FlightList")}
           rippleColor={'white'}
           buttonColor="black"
           dark

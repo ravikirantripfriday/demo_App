@@ -4,7 +4,7 @@ import HomeTopTab from './HomeTopTab';
 import { styles } from './styles';
 import { colors } from '../config/theme';
 
-const Home = () => {
+const Home = (props) => {
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={{position: 'absolute', width: '100%', height: '100%'}}>
@@ -12,7 +12,7 @@ const Home = () => {
         <View style={{flex: 1, backgroundColor: 'white'}} />
       </View>
      <View style={styles.mainContainer}>
-     <HomeTopTab/>
+     <HomeTopTab {...props}/>
      </View>
     </SafeAreaView>
   );
